@@ -53,7 +53,7 @@
                         echo "<tr>
                         <td>{$item['name']}</td>
                         <td>{$item['description']}</td>
-                        <td>{$item['price']}</td>
+                        <td>" . number_format((float)$item['price'], 2, '.', '') . "€</td>
                         <td>{$item['category']}</td>
                         <td style='width: 300px;'>
                             <a href='./view.php?id={$item['id']}' class='btn btn-default'><span class='glyphicon glyphicon-eye-open'></span> Voir</a>
@@ -62,6 +62,7 @@
                         </td>
                     </tr>";
                     }
+                    Database::disconnect();
                     ?>
 
                 </tbody>

@@ -12,7 +12,7 @@ class Database
     public static function connect()
     {
         try {
-            self::$bdd = new PDO("mysql:host=" . self::$dbHost . ";dbname=" . self::$dbName, self::$dbUser, self::$dbUserPassword);
+            self::$bdd = new PDO("mysql:host=" . self::$dbHost . ";dbname=" . self::$dbName, self::$dbUser, self::$dbUserPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         } catch (PDOException $e) {
             die('Erreur : ' . $e->getMessage());
         }
