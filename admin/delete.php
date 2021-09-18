@@ -9,6 +9,18 @@ function checkInput($data)
 
     return $data;
 }
+if (!empty($_GET['id'])) {
+    $id = checkInput($_GET['id']);
+}
+
+if (!empty($_POST)) {
+    $id = checkInput($_POST['id']);
+    $bdd = Database::connect();
+    $response = $bdd->prepare('DELETE FROM items WHERE id=?');
+    $response->execute(array($id));
+    Database::disconnect();
+    header('Location: ./index.php');
+}
 
 ?>
 
@@ -41,12 +53,12 @@ function checkInput($data)
         <div class="row">
             <h1><strong>Supprimer un item</strong></h1>
             <br>
-            <form action="./delete.php" method="POST" class="form" role="form" enctype="multipart/form-data">
-
+            <form action="./delete.php" method="POST" class="form" role="form">
+                <input type="hidden" name="id" value="<?= $id ?>">
+                <p class="alert alert-warning">Êtes-vous sûr de vouloir supprimer ?</p>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-success">
-                        <span class="glyphicon glyphicon-pencil"></span> Ajouter</button>
-                    <a href="./index.php" class="btn btn-primary"><span class='glyphicon glyphicon-arrow-left'></span> Retour</a>
+                    <button type="submit" class="btn btn-default">Oui</button>
+                    <a href="./index.php" class="btn btn-warning">Non</a>
                 </div>
             </form>
 
