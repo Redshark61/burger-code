@@ -71,6 +71,11 @@ if (!empty($_POST)) {
     if (($isSuccess && $isImageUpdated && $isUploadSuccess) || ($isSuccess && !$isImageUpdated)) {
         $bdd = Database::connect();
         if ($isImageUpdated) {
+            $response = $bdd->prepare('SELECT image FROM items WHERE id=?');
+            $response->execute(array($id));
+            $data = $response->fetch();
+            unlink('../images/' . $data['image']);
+
             $response = $bdd->prepare("UPDATE items set name=?, description=?, price=?, category=?, image=? WHERE id=?");
             $response->execute(array($name, $description, $price, $category, $image, $id));
         } else {

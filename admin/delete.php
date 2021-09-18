@@ -16,6 +16,11 @@ if (!empty($_GET['id'])) {
 if (!empty($_POST)) {
     $id = checkInput($_POST['id']);
     $bdd = Database::connect();
+    $response = $bdd->prepare('SELECT image FROM items WHERE id=?');
+    $response->execute(array($id));
+    $data = $response->fetch();
+    unlink('../images/' . $data['image']);
+
     $response = $bdd->prepare('DELETE FROM items WHERE id=?');
     $response->execute(array($id));
     Database::disconnect();
